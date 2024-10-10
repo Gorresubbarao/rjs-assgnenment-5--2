@@ -72,7 +72,7 @@ class Login extends Component {
   }
 
   formContainer = () => {
-    const {errorMessage, username, password} = this.state
+    const {errorMessage, username, password, isShowError} = this.state
     return (
       <FormContainer onSubmit={this.onSubmitForm}>
         <Label htmlFor="username">USERNAME</Label>
@@ -92,12 +92,16 @@ class Login extends Component {
           type="password"
         />
         <LoginButton type="submit">Login</LoginButton>
-        {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : ''}
+        {isShowError ? <ErrorText>{errorMessage}</ErrorText> : ''}
       </FormContainer>
     )
   }
 
   render() {
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken !== undefined) {
+      return <Redirect to="/" />
+    }
     return (
       <LoginFormContainer>
         <ResponseContainer>

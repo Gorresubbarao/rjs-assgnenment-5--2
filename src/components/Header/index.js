@@ -1,4 +1,5 @@
 import {withRouter} from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import {
   NavHeader,
@@ -17,36 +18,47 @@ import {
   LogOutButtonIcon,
 } from './styledComponents'
 
-const Header = () => (
-  <NavHeader>
-    <NavContent>
-      <AppLogAndHeadingContainer>
-        <AppLogoImg
-          src="https://assets.ccbp.in/frontend/react-js/logo-img.png"
-          alt="website logo"
-        />
-        <Heading>Jobby</Heading>
-      </AppLogAndHeadingContainer>
-      <NavbarMobleLinks>
-        <StyledLink to="/login">
-          <HomeIcon />
-        </StyledLink>
-        <StyledLink to="/login">
-          <JobsIcon />
-        </StyledLink>
-      </NavbarMobleLinks>
-      <NavbarDesctopLinks>
-        <StyledLink to="/">
-          <HomeRouteLink>Home</HomeRouteLink>
-        </StyledLink>
-        <StyledLink to="/login">
-          <JobsRouteLink>Jobs</JobsRouteLink>
-        </StyledLink>
-      </NavbarDesctopLinks>
-      <LogOutButtonIcon />
-      <NavbarLogoutButton>Logout</NavbarLogoutButton>
-    </NavContent>
-  </NavHeader>
-)
+const Header = props => {
+  const onClickLogOut = () => {
+    const {history} = props
+    Cookies.remove('jwt_token')
+    history.replace('/login')
+  }
+
+  return (
+    <NavHeader>
+      <NavContent>
+        <AppLogAndHeadingContainer>
+          <StyledLink to="/">
+            <AppLogoImg
+              src="https://assets.ccbp.in/frontend/react-js/logo-img.png"
+              alt="website logo"
+            />
+          </StyledLink>
+
+          <Heading>Jobby</Heading>
+        </AppLogAndHeadingContainer>
+        <NavbarMobleLinks>
+          <StyledLink to="/">
+            <HomeIcon />
+          </StyledLink>
+          <StyledLink to="/jobs">
+            <JobsIcon />
+          </StyledLink>
+        </NavbarMobleLinks>
+        <NavbarDesctopLinks>
+          <StyledLink to="/">
+            <HomeRouteLink>Home</HomeRouteLink>
+          </StyledLink>
+          <StyledLink to="/jobs">
+            <JobsRouteLink>Jobs</JobsRouteLink>
+          </StyledLink>
+        </NavbarDesctopLinks>
+        <LogOutButtonIcon onClick={onClickLogOut} />
+        <NavbarLogoutButton onClick={onClickLogOut}>Logout</NavbarLogoutButton>
+      </NavContent>
+    </NavHeader>
+  )
+}
 
 export default withRouter(Header)

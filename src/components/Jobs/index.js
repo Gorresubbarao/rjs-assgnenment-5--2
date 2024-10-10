@@ -1,14 +1,14 @@
-import {JobContainer} from './styledComponent'
-import JobProfileItem from '../JobProfileItem'
+import JobContainer from './styledComponent'
 import JobDescription from '../JobDescription'
+import Header from '../Header'
 
-const Jobs = () => {
-  return (
+const Jobs = () => (
+  <>
+    <Header />
     <JobContainer>
-      <JobProfileItem />
       <JobDescription />
     </JobContainer>
-  )
-}
+  </>
+)
 
 export default Jobs

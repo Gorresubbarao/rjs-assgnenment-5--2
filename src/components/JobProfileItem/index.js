@@ -1,54 +1,28 @@
-const employmentTypesList = [
-  {
-    label: 'Full Time',
-    employmentTypeId: 'FULLTIME',
-  },
-  {
-    label: 'Part Time',
-    employmentTypeId: 'PARTTIME',
-  },
-  {
-    label: 'Freelance',
-    employmentTypeId: 'FREELANCE',
-  },
-  {
-    label: 'Internship',
-    employmentTypeId: 'INTERNSHIP',
-  },
-]
-
-const salaryRangesList = [
-  {
-    salaryRangeId: '1000000',
-    label: '10 LPA and above',
-  },
-  {
-    salaryRangeId: '2000000',
-    label: '20 LPA and above',
-  },
-  {
-    salaryRangeId: '3000000',
-    label: '30 LPA and above',
-  },
-  {
-    salaryRangeId: '4000000',
-    label: '40 LPA and above',
-  },
-]
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import Loader from 'react-loader-spinner'
 
 import {
-  JobprofileItemContainer,
   UserProfileContainer,
   UserProfile,
   UserName,
   BioOfUser,
+  Hrline,
+  LoaderContainer,
+  RetryButton,
 } from './styledComponents'
+
+const apiStatusConstant = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
 
 class JobprofileItem extends Component {
   state = {
     userProfileData: {},
+    apiStatus: apiStatusConstant.inProgress,
   }
 
   componentDidMount() {
@@ -56,6 +30,10 @@ class JobprofileItem extends Component {
   }
 
   getUserProfileData = async () => {
+    this.setState({
+      apiStatus: apiStatusConstant.inProgress,
+    })
+
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = 'https://apis.ccbp.in/profile'
     const options = {
@@ -69,7 +47,7 @@ class JobprofileItem extends Component {
 
     if (response.ok) {
       const fetchedData = await response.json()
-      // console.log('fetcheddata', fetchedData)
+
       const updatedData = {
         profileImgUrl: fetchedData.profile_details.profile_image_url,
         name: fetchedData.profile_details.name,
@@ -78,6 +56,11 @@ class JobprofileItem extends Component {
 
       this.setState({
         userProfileData: updatedData,
+        apiStatus: apiStatusConstant.success,
+      })
+    } else {
+      this.setState({
+        apiStatus: apiStatusConstant.failure,
       })
     }
   }
@@ -95,11 +78,42 @@ class JobprofileItem extends Component {
     )
   }
 
+  showRenderLodingView = () => (
+    <LoaderContainer data-testid="loader">
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </LoaderContainer>
+  )
+
+  showRenderFailedProfileView = () => (
+    <RetryButton type="button" onClick={this.getUserProfileData}>
+      Retry
+    </RetryButton>
+  )
+
+  showProfileStatusView = () => {
+    const {apiStatus} = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstant.success:
+        return this.userProfileView()
+
+      case apiStatusConstant.failure:
+        return this.showRenderFailedProfileView()
+
+      case apiStatusConstant.inProgress:
+        return this.showRenderLodingView()
+
+      default:
+        return null
+    }
+  }
+
   render() {
     return (
-      <JobprofileItemContainer>
-        {this.userProfileView()}
-      </JobprofileItemContainer>
+      <>
+        {this.showProfileStatusView()}
+        <Hrline />
+      </>
     )
   }
 }
