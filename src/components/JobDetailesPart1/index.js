@@ -42,7 +42,7 @@ const JobDetailespart1 = props => {
   return (
     <JobItem>
       <CompanyLogoAndJobRoleAndStarsContainer>
-        <CompanyLogo src={companyLogoUrl} alt="company logo" />
+        <CompanyLogo src={companyLogoUrl} alt="job details company logo" />
         <JobRoleAndStarsContainer>
           <JobRole>{title}</JobRole>
           <StarAndRatingConatainer>

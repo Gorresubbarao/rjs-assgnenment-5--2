@@ -6,7 +6,7 @@ const Skilldata = props => {
 
   return (
     <SkillItem>
-      <CompanyLogo src={imgUrl} alt="Company Logo" />
+      <CompanyLogo src={imgUrl} alt={name} />
       <CompanyName>{name}</CompanyName>
     </SkillItem>
   )

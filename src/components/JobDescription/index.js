@@ -139,7 +139,7 @@ class JobDescription extends Component {
   renderingSearchInputDesktop = () => {
     const {searchInputValue} = this.state
     return (
-      <SearchInputAndSearchIconDeskTopContainer>
+      <SearchInputAndSearchIconDeskTopContainer data-testid="searchButton">
         <SearchInput
           type="search"
           value={searchInputValue}
@@ -156,7 +156,7 @@ class JobDescription extends Component {
   renderingSearchInputMobile = () => {
     const {searchInputValue} = this.state
     return (
-      <SearchInputAndSearchIconMobileContainer>
+      <SearchInputAndSearchIconMobileContainer data-testid="searchButton">
         <SearchInput
           type="search"
           value={searchInputValue}

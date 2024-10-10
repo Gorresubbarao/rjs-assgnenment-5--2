@@ -14,7 +14,7 @@ import NotFound from './components/NotFound'
 // Replace your code here
 const App = () => (
   <Switch>
-    <Route exact path="/login" component={Login} />
+    <Route path="/login" component={Login} />
     <ProtectedRoute exact path="/" component={Home} />
     <ProtectedRoute exact path="/jobs" component={Job} />
     <ProtectedRoute exact path="/jobs/:id" component={JobItemDetails} />

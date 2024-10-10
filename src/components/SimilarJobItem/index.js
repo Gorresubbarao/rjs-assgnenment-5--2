@@ -34,7 +34,7 @@ const SimilarJobItem = props => {
   return (
     <JobItem>
       <CompanyLogoAndJobRoleAndStarsContainer>
-        <CompanyLogo src={companyLogoUrl} alt="company logo" />
+        <CompanyLogo src={companyLogoUrl} alt="similar job company logo" />
         <JobRoleAndStarsContainer>
           <JobRole>{title}</JobRole>
           <StarAndRatingConatainer>
