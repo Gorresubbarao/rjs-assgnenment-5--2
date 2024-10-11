@@ -13,8 +13,8 @@ export const ResponseContainer = styled.div`
   align-items: center;
   background-color: #272727;
   border-radius: 10px;
-  width: 230px;
-  height: 240px;
+  width: 330px;
+  height: 290px;
   padding: 40px;
   @media screen and (min-width: 768px) {
     width: 430px;
